@@ -4,6 +4,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace wichacksSpring
 {
+    enum GameState
+    {
+        TitleScreen,
+        GameScreen,
+        Credits,
+        EndScreen
+    }
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
