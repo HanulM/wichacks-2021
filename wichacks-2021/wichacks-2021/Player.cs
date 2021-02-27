@@ -18,7 +18,7 @@ namespace wichacksSpring
         #endregion
 
         #region Constructor
-        public Player(Texture2D asset, Rectangle pos)
+        protected Player(Texture2D asset, Rectangle pos)
             : base(asset, pos)
         {
             this.asset = asset;
