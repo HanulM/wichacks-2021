@@ -15,6 +15,7 @@ namespace wichacksSpring
         #endregion
 
         #region Properties
+        public Rectangle Position { get { return this.position; } }
         #endregion
 
         #region Constructor
