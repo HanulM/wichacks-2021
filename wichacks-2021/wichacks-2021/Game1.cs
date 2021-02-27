@@ -15,6 +15,7 @@ namespace wichacksSpring
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private GameState currentState;
 
         public Game1()
         {
@@ -43,6 +44,20 @@ namespace wichacksSpring
                 Exit();
 
             // TODO: Add your update logic here
+            switch (currentState)
+            {
+                case GameState.TitleScreen:
+                    break;
+
+                case GameState.GameScreen:
+                    break;
+
+                case GameState.Credits:
+                    break;
+
+                case GameState.EndScreen:
+                    break;
+            }
 
             base.Update(gameTime);
         }
