@@ -7,9 +7,12 @@ namespace wichacksSpring
     enum GameState
     {
         TitleScreen,
-        GameScreen,
-        Credits,
-        EndScreen
+        GameIntro,
+        FirstScene,
+        SecondScene,
+        ThirdScene,
+        EndScreen,
+        Credits
     }
     public class Game1 : Game
     {
@@ -49,13 +52,22 @@ namespace wichacksSpring
                 case GameState.TitleScreen:
                     break;
 
-                case GameState.GameScreen:
+                case GameState.GameIntro:
                     break;
 
-                case GameState.Credits:
+                case GameState.FirstScene:
+                    break;
+
+                case GameState.SecondScene:
+                    break;
+
+                case GameState.ThirdScene:
                     break;
 
                 case GameState.EndScreen:
+                    break;
+
+                case GameState.Credits:
                     break;
             }
 
