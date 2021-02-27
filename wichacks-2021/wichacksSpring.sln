@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wichacksSpring", "wichacks-2021\wichacksSpring.csproj", "{47D19E8A-8E7B-4EA7-BB4A-686A5F3438EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47D19E8A-8E7B-4EA7-BB4A-686A5F3438EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D19E8A-8E7B-4EA7-BB4A-686A5F3438EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D19E8A-8E7B-4EA7-BB4A-686A5F3438EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D19E8A-8E7B-4EA7-BB4A-686A5F3438EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2F0C91E-49F1-4613-A380-D95FFF96DF2C}
+	EndGlobalSection
+EndGlobal
