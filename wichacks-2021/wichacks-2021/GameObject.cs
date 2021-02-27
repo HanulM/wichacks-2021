@@ -29,9 +29,9 @@ namespace wichacksSpring
         /// <summary>
         /// Tells the object to draw itself
         /// </summary>
-        public virtual void Draw()
+        public virtual void Draw(SpriteBatch sb)
         {
-
+            sb.Draw(asset, position, Color.White);
         }
         #endregion
     }
