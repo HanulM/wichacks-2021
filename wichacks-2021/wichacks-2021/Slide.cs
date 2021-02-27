@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace wichacksSpring
 {
-    class Exhibit : GameObject
+    class Slide : GameObject
     {
         #region Fields
         private Texture2D asset;
@@ -20,8 +20,8 @@ namespace wichacksSpring
         #endregion
 
         #region Constructor
-        protected Exhibit(Texture2D asset, Rectangle pos)
-            : base(asset, pos)
+        public Slide(Texture2D asset, Rectangle pos)
+            :base(asset, pos)
         {
             this.asset = asset;
             this.position = pos;
@@ -29,9 +29,9 @@ namespace wichacksSpring
         #endregion
 
         #region Methods
-        public void DisplayExhibit()
+        public void DisplaySlide()
         {
-            
+
         }
         #endregion
     }
