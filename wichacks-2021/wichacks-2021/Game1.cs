@@ -9,6 +9,9 @@ namespace wichacksSpring
         TitleScreen,
         GameIntro,
         FirstScene,
+        FirstSlide,
+        SecondSlide,
+        ThirdSlide,
         SecondScene,
         ThirdScene,
         EndScreen,
@@ -28,6 +31,9 @@ namespace wichacksSpring
         private Rectangle firstButton = new Rectangle(150, 700, 200, 125);
         private Rectangle secondButton = new Rectangle(700, 700, 200, 125);
         private Rectangle thirdButton = new Rectangle(1250, 700, 200, 125);
+        private Texture2D firstSlide;
+        private Texture2D secondSlide;
+        private Texture2D thirdSlide;
 
         // Other Asset Fields
         private Texture2D titleScreen;
@@ -37,6 +43,10 @@ namespace wichacksSpring
         private Texture2D second;
         private Texture2D third;
         private Texture2D exhibitButton;
+        private Texture2D backButton;
+        private Rectangle backRect;
+        private Texture2D nextButton;
+        private Rectangle nextRect;
 
         // Keyboard and Mouse Input
         private KeyboardState currentKbState;
@@ -63,6 +73,9 @@ namespace wichacksSpring
             currentState = GameState.TitleScreen;
             // Title Screen
             enterRect = new Rectangle(600, 500, 430, 330);
+            // Misc. Buttons
+            backRect = new Rectangle(1400, 850, 100, 100);
+            nextRect = new Rectangle(1400, 850, 100, 100);
             // Credits
             base.Initialize();
         }
@@ -78,6 +91,10 @@ namespace wichacksSpring
             first = this.Content.Load<Texture2D>("exhibit-1");
             spriteFont = this.Content.Load<SpriteFont>("font");
             exhibitButton = this.Content.Load<Texture2D>("exhibit-button");
+            firstSlide = this.Content.Load<Texture2D>("slide1");
+            secondSlide = this.Content.Load<Texture2D>("slide2");
+            backButton = this.Content.Load<Texture2D>("back-button");
+            nextButton = this.Content.Load<Texture2D>("right");
         }
 
         protected override void Update(GameTime gameTime)
@@ -108,29 +125,67 @@ namespace wichacksSpring
                     break;
 
                 case GameState.FirstScene:
-                    if(firstButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    if (firstButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
                     {
-                        // call method for first slide
+                        currentState = GameState.FirstSlide;
                     }
 
-                    if(secondButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    if (secondButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
                     {
-                        // call method for second slide
+                        currentState = GameState.SecondSlide;
                     }
 
-                    if(thirdButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    if (thirdButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
                     {
-                        // call method for third slide
+                        currentState = GameState.ThirdSlide;
+                    }
+
+                    if(nextRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.SecondScene;
+                    }
+                    break;
+
+                case GameState.FirstSlide:
+                    if(backRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.FirstScene;
+                    }
+                    break;
+
+                case GameState.SecondSlide:
+                    if (backRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.FirstScene;
+                    }
+                    break;
+
+                case GameState.ThirdSlide:
+                    if (backRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.FirstScene;
                     }
                     break;
 
                 case GameState.SecondScene:
+                    if (nextRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.ThirdScene;
+                    }
                     break;
 
                 case GameState.ThirdScene:
+                    if (nextRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.EndScreen;
+                    }
                     break;
 
                 case GameState.EndScreen:
+                    if (nextRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.Credits;
+                    }
                     break;
 
                 case GameState.Credits:
@@ -144,7 +199,7 @@ namespace wichacksSpring
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.SkyBlue);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
@@ -167,18 +222,44 @@ namespace wichacksSpring
                     _spriteBatch.Draw(exhibitButton, firstButton, Color.White);
                     _spriteBatch.Draw(exhibitButton, secondButton, Color.White);
                     _spriteBatch.Draw(exhibitButton, thirdButton, Color.White);
+                    _spriteBatch.Draw(nextButton, nextRect, Color.White);
+                    break;
+
+                case GameState.FirstSlide:
+                    _spriteBatch.Draw(firstSlide, screenRect, Color.White);
+                    _spriteBatch.Draw(backButton, backRect, Color.White);
+                    break;
+
+                case GameState.SecondSlide:
+                    _spriteBatch.Draw(secondSlide, screenRect, Color.White);
+                    _spriteBatch.Draw(backButton, backRect, Color.White);
+                    break;
+
+                case GameState.ThirdSlide:
+                    _spriteBatch.DrawString(spriteFont, "Display coming soon!", new Vector2(750, 400), Color.Black);
+                    _spriteBatch.Draw(backButton, backRect, Color.White);
                     break;
 
                 case GameState.SecondScene:
+                    _spriteBatch.DrawString(spriteFont, "Exhibit under construction!", new Vector2(750, 400), Color.Black);
+                    _spriteBatch.Draw(nextButton, nextRect, Color.White);
                     break;
 
                 case GameState.ThirdScene:
+                    _spriteBatch.DrawString(spriteFont, "Exhibit under construction!", new Vector2(750, 400), Color.Black);
+                    _spriteBatch.Draw(nextButton, nextRect, Color.White);
                     break;
 
                 case GameState.EndScreen:
+                    _spriteBatch.Draw(titleScreen, screenRect, Color.White);
+                    _spriteBatch.Draw(tourGuide, new Rectangle(20, 300, 700, 800), Color.White);
+                    _spriteBatch.DrawString(spriteFont, "Thanks for coming!", new Vector2(0, 500), Color.Black);
+                    _spriteBatch.Draw(nextButton, nextRect, Color.White);
                     break;
 
                 case GameState.Credits:
+                    _spriteBatch.DrawString(spriteFont, "Back and next button icons were created by Freepik.", new Vector2(100, 500), Color.Black);
+                    _spriteBatch.DrawString(spriteFont, "Press escape to exit.", new Vector2(100, 300), Color.Black);
                     break;
             }
             _spriteBatch.End();
@@ -188,7 +269,7 @@ namespace wichacksSpring
         private bool SingleMousePress(MouseState mState)
         {
             mState = Mouse.GetState();
-            if(mState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+            if (mState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
             {
                 return true;
             }
@@ -198,25 +279,12 @@ namespace wichacksSpring
         private bool SingleKeyPress(Keys key, KeyboardState kbState)
         {
             kbState = Keyboard.GetState();
-            if(kbState.IsKeyDown(key) && prevKbState.IsKeyUp(key))
+            if (kbState.IsKeyDown(key) && prevKbState.IsKeyUp(key))
             {
                 return true;
             }
 
             return false;
-        }
-
-        private void ProcessFirstSlide()
-        {
-
-        }
-        private void ProcessSecondSlide()
-        {
-
-        }
-        private void ProcessThirdSlide()
-        {
-
         }
     }
 }
