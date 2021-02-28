@@ -29,6 +29,10 @@ namespace wichacksSpring
         #endregion
 
         #region Methods
+        public void ClickSlide()
+        {
+
+        }
         public void DisplaySlide()
         {
 
