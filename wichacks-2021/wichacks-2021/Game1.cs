@@ -23,14 +23,20 @@ namespace wichacksSpring
 
         private Rectangle screenRect = new Rectangle(0, 0, 1600, 1000);
 
-        // Asset Fields
+        // First Exhibit Assets
+        private Texture2D first;
+        private Rectangle firstButton = new Rectangle(150, 700, 200, 125);
+        private Rectangle secondButton = new Rectangle(700, 700, 200, 125);
+        private Rectangle thirdButton = new Rectangle(1250, 700, 200, 125);
+
+        // Other Asset Fields
         private Texture2D titleScreen;
         private Texture2D enterButton;
         private Rectangle enterRect;
         private Texture2D tourGuide;
-        private Texture2D first;
         private Texture2D second;
         private Texture2D third;
+        private Texture2D exhibitButton;
 
         // Keyboard and Mouse Input
         private KeyboardState currentKbState;
@@ -71,6 +77,7 @@ namespace wichacksSpring
             enterButton = this.Content.Load<Texture2D>("enter-button");
             first = this.Content.Load<Texture2D>("exhibit-1");
             spriteFont = this.Content.Load<SpriteFont>("font");
+            exhibitButton = this.Content.Load<Texture2D>("exhibit-button");
         }
 
         protected override void Update(GameTime gameTime)
@@ -86,14 +93,14 @@ namespace wichacksSpring
             {
 
                 case GameState.TitleScreen:
-                    if (SingleKeyPress(Keys.Enter, currentKbState))
+                    if (SingleKeyPress(Keys.Enter, currentKbState)) // Press enter to start game
                     {
                         currentState = GameState.GameIntro;
                     }
                     break;
 
 
-                case GameState.GameIntro:
+                case GameState.GameIntro: // Enter button to "enter" museum
                     if (enterRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
                     {
                         currentState = GameState.FirstScene;
@@ -101,6 +108,20 @@ namespace wichacksSpring
                     break;
 
                 case GameState.FirstScene:
+                    if(firstButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        // call method for first slide
+                    }
+
+                    if(secondButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        // call method for second slide
+                    }
+
+                    if(thirdButton.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        // call method for third slide
+                    }
                     break;
 
                 case GameState.SecondScene:
@@ -142,7 +163,10 @@ namespace wichacksSpring
                     break;
 
                 case GameState.FirstScene:
-                    
+                    _spriteBatch.Draw(first, screenRect, Color.White);
+                    _spriteBatch.Draw(exhibitButton, firstButton, Color.White);
+                    _spriteBatch.Draw(exhibitButton, secondButton, Color.White);
+                    _spriteBatch.Draw(exhibitButton, thirdButton, Color.White);
                     break;
 
                 case GameState.SecondScene:
@@ -180,6 +204,19 @@ namespace wichacksSpring
             }
 
             return false;
+        }
+
+        private void ProcessFirstSlide()
+        {
+
+        }
+        private void ProcessSecondSlide()
+        {
+
+        }
+        private void ProcessThirdSlide()
+        {
+
         }
     }
 }
