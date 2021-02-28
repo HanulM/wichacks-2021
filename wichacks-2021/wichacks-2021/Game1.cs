@@ -19,6 +19,7 @@ namespace wichacksSpring
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GameState currentState;
+        private SpriteFont spriteFont;
 
         private Rectangle screenRect = new Rectangle(0, 0, 1600, 1000);
 
@@ -30,11 +31,6 @@ namespace wichacksSpring
         private Texture2D first;
         private Texture2D second;
         private Texture2D third;
-
-        // Object Fields
-        private GameObject firstExhibit;
-        private GameObject secondExhibit;
-        private GameObject thirdExhibit;
 
         // Keyboard and Mouse Input
         private KeyboardState currentKbState;
@@ -61,14 +57,6 @@ namespace wichacksSpring
             currentState = GameState.TitleScreen;
             // Title Screen
             enterRect = new Rectangle(600, 500, 430, 330);
-            // First Exhibit
-            firstExhibit = new Exhibit(first, screenRect);
-            // Second Exhibit
-            secondExhibit = new Exhibit(second, screenRect);
-            // Third Exhibit
-            thirdExhibit = new Exhibit(third, screenRect);
-            // End Screen
-
             // Credits
             base.Initialize();
         }
@@ -82,6 +70,7 @@ namespace wichacksSpring
             tourGuide = this.Content.Load<Texture2D>("tourguide");
             enterButton = this.Content.Load<Texture2D>("enter-button");
             first = this.Content.Load<Texture2D>("exhibit-1");
+            spriteFont = this.Content.Load<SpriteFont>("font");
         }
 
         protected override void Update(GameTime gameTime)
@@ -92,23 +81,23 @@ namespace wichacksSpring
             // TODO: Add your update logic here
             currentKbState = Keyboard.GetState();
             currentMouseState = Mouse.GetState();
-            prevKbState = Keyboard.GetState();
-            prevMouseState = Mouse.GetState();
 
             switch (currentState)
             {
 
                 case GameState.TitleScreen:
-                    if (enterRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    if (SingleKeyPress(Keys.Enter, currentKbState))
                     {
                         currentState = GameState.GameIntro;
                     }
-
-                    currentMouseState = prevMouseState;
                     break;
 
 
                 case GameState.GameIntro:
+                    if (enterRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.FirstScene;
+                    }
                     break;
 
                 case GameState.FirstScene:
@@ -125,7 +114,9 @@ namespace wichacksSpring
 
                 case GameState.Credits:
                     break;
-        }
+            }
+            prevKbState = currentKbState;
+            prevMouseState = currentMouseState;
 
             base.Update(gameTime);
         }
@@ -141,14 +132,17 @@ namespace wichacksSpring
                 case GameState.TitleScreen:
                     _spriteBatch.Draw(titleScreen, screenRect, Color.White);
                     _spriteBatch.Draw(tourGuide, new Rectangle(20, 300, 700, 800), Color.White);
-                    _spriteBatch.Draw(enterButton, enterRect, Color.White);
+                    _spriteBatch.DrawString(spriteFont, "Press enter to start!", new Vector2(0, 500), Color.Black);
                     break;
 
                 case GameState.GameIntro:
+                    _spriteBatch.Draw(titleScreen, screenRect, Color.White);
+                    _spriteBatch.Draw(tourGuide, new Rectangle(20, 300, 700, 800), Color.White);
+                    _spriteBatch.Draw(enterButton, enterRect, Color.White);
                     break;
 
                 case GameState.FirstScene:
-                    firstExhibit.Draw(_spriteBatch);
+                    
                     break;
 
                 case GameState.SecondScene:
@@ -169,7 +163,18 @@ namespace wichacksSpring
 
         private bool SingleMousePress(MouseState mState)
         {
+            mState = Mouse.GetState();
             if(mState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private bool SingleKeyPress(Keys key, KeyboardState kbState)
+        {
+            kbState = Keyboard.GetState();
+            if(kbState.IsKeyDown(key) && prevKbState.IsKeyUp(key))
             {
                 return true;
             }

@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:exhibit-button.png
 
+#begin font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font.spritefont
+
 #begin titlescreen-background.png
 /importer:TextureImporter
 /processor:TextureProcessor
