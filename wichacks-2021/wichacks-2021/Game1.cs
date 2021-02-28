@@ -20,16 +20,21 @@ namespace wichacksSpring
         private SpriteBatch _spriteBatch;
         private GameState currentState;
 
+        private Rectangle screenRect = new Rectangle(0, 0, 1600, 1000);
+
         // Asset Fields
         private Texture2D titleScreen;
         private Texture2D enterButton;
         private Rectangle enterRect;
         private Texture2D tourGuide;
+        private Texture2D first;
+        private Texture2D second;
+        private Texture2D third;
 
         // Object Fields
-        private Exhibit firstExhibit;
-        private Exhibit secondExhibit;
-        private Exhibit thirdExhibit;
+        private GameObject firstExhibit;
+        private GameObject secondExhibit;
+        private GameObject thirdExhibit;
 
         // Keyboard and Mouse Input
         private KeyboardState currentKbState;
@@ -47,12 +52,24 @@ namespace wichacksSpring
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            // Graphics
             _graphics.PreferredBackBufferWidth = 1600;
             _graphics.PreferredBackBufferHeight = 1000;
             _graphics.ApplyChanges();
+            // State Initialize
             currentState = GameState.TitleScreen;
+            // Title Screen
+            enterRect = new Rectangle(600, 500, 430, 330);
+            // First Exhibit
+            firstExhibit = new Exhibit(first, screenRect);
+            // Second Exhibit
+            secondExhibit = new Exhibit(second, screenRect);
+            // Third Exhibit
+            thirdExhibit = new Exhibit(third, screenRect);
+            // End Screen
 
-            enterRect = new Rectangle(600, 500, 430, 330); 
+            // Credits
             base.Initialize();
         }
 
@@ -64,6 +81,7 @@ namespace wichacksSpring
             titleScreen = this.Content.Load<Texture2D>("titlescreen-background");
             tourGuide = this.Content.Load<Texture2D>("tourguide");
             enterButton = this.Content.Load<Texture2D>("enter-button");
+            first = this.Content.Load<Texture2D>("exhibit-1");
         }
 
         protected override void Update(GameTime gameTime)
@@ -121,7 +139,7 @@ namespace wichacksSpring
             switch (currentState)
             {
                 case GameState.TitleScreen:
-                    _spriteBatch.Draw(titleScreen, new Rectangle(0, 0, 1600, 1000), Color.White);
+                    _spriteBatch.Draw(titleScreen, screenRect, Color.White);
                     _spriteBatch.Draw(tourGuide, new Rectangle(20, 300, 700, 800), Color.White);
                     _spriteBatch.Draw(enterButton, enterRect, Color.White);
                     break;
@@ -130,6 +148,7 @@ namespace wichacksSpring
                     break;
 
                 case GameState.FirstScene:
+                    firstExhibit.Draw(_spriteBatch);
                     break;
 
                 case GameState.SecondScene:

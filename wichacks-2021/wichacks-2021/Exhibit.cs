@@ -20,7 +20,7 @@ namespace wichacksSpring
         #endregion
 
         #region Constructor
-        protected Exhibit(Texture2D asset, Rectangle pos)
+        public Exhibit(Texture2D asset, Rectangle pos)
             : base(asset, pos)
         {
             this.asset = asset;
