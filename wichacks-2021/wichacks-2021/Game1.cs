@@ -23,6 +23,7 @@ namespace wichacksSpring
         // Asset Fields
         private Texture2D titleScreen;
         private Texture2D enterButton;
+        private Rectangle enterRect;
         private Texture2D tourGuide;
 
         // Object Fields
@@ -50,6 +51,8 @@ namespace wichacksSpring
             _graphics.PreferredBackBufferHeight = 1000;
             _graphics.ApplyChanges();
             currentState = GameState.TitleScreen;
+
+            enterRect = new Rectangle(600, 500, 430, 330); 
             base.Initialize();
         }
 
@@ -69,10 +72,23 @@ namespace wichacksSpring
                 Exit();
 
             // TODO: Add your update logic here
+            currentKbState = Keyboard.GetState();
+            currentMouseState = Mouse.GetState();
+            prevKbState = Keyboard.GetState();
+            prevMouseState = Mouse.GetState();
+
             switch (currentState)
             {
+
                 case GameState.TitleScreen:
+                    if (enterRect.Contains(currentMouseState.X, currentMouseState.Y) && SingleMousePress(currentMouseState))
+                    {
+                        currentState = GameState.GameIntro;
+                    }
+
+                    currentMouseState = prevMouseState;
                     break;
+
 
                 case GameState.GameIntro:
                     break;
@@ -91,7 +107,7 @@ namespace wichacksSpring
 
                 case GameState.Credits:
                     break;
-            }
+        }
 
             base.Update(gameTime);
         }
@@ -107,7 +123,7 @@ namespace wichacksSpring
                 case GameState.TitleScreen:
                     _spriteBatch.Draw(titleScreen, new Rectangle(0, 0, 1600, 1000), Color.White);
                     _spriteBatch.Draw(tourGuide, new Rectangle(20, 300, 700, 800), Color.White);
-                    _spriteBatch.Draw(enterButton, new Rectangle(600, 500, 430, 330), Color.White);
+                    _spriteBatch.Draw(enterButton, enterRect, Color.White);
                     break;
 
                 case GameState.GameIntro:
@@ -130,6 +146,16 @@ namespace wichacksSpring
             }
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private bool SingleMousePress(MouseState mState)
+        {
+            if(mState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
