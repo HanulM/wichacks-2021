@@ -59,6 +59,8 @@ namespace wichacksSpring
 
             // TODO: use this.Content to load your game content here
             titleScreen = this.Content.Load<Texture2D>("titlescreen-background");
+            tourGuide = this.Content.Load<Texture2D>("tourguide");
+            enterButton = this.Content.Load<Texture2D>("enter-button");
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,6 +106,8 @@ namespace wichacksSpring
             {
                 case GameState.TitleScreen:
                     _spriteBatch.Draw(titleScreen, new Rectangle(0, 0, 1600, 1000), Color.White);
+                    _spriteBatch.Draw(tourGuide, new Rectangle(20, 300, 700, 800), Color.White);
+                    _spriteBatch.Draw(enterButton, new Rectangle(600, 500, 430, 330), Color.White);
                     break;
 
                 case GameState.GameIntro:
